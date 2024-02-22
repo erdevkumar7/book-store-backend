@@ -6,10 +6,6 @@ const {
 const db = require("../models/index.model");
 const User = db.User;
 
-exports.allUser = async (req, res) => {
-  res.status(200).json("allUserFind");
-};
-
 // User signUp
 exports.registration = async (req, res) => {
   const { user_email, user_password } = req.body;
@@ -71,15 +67,8 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-exports.userUpdate = async (req, res) => {
-  //   const { id } = req.params;
-  //   const updatedUser = await User.update(req.body, { where: { id: id } });
-  //   if (updatedUser) {
-  //     const findUpdatedUser = await User.findOne({ where: { id: id } });
-  res.status(201).json("findUpdatedUser");
-  //   } else {
-  //     console.log("User not Updated ... ");
-  //   }
+// Find All User For admin use
+exports.allUser = async (req, res) => {
+  const allUserFind = await User.find({});
+  res.status(200).json(allUserFind);
 };
-
-

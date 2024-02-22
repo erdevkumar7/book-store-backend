@@ -6,6 +6,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/book-store_db')
 const db = {};
 
 db.User = require('./user.model');
-// db.Theater = require('./theater.model');
+db.Book = require('./book.model');
 
 module.exports = db;
