@@ -57,6 +57,7 @@ exports.loginUser = async (req, res) => {
       const token = await generateToken({
         user_objectId: findUser._id,
         user_email: findUser.user_email,
+        user_role: findUser.user_role
       });
 
       res.status(200).json({

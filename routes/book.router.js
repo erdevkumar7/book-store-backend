@@ -1,8 +1,6 @@
 const express = require('express');
 const { getAllBooks, createBook, updateBookDetail, deleteBook } = require('../controllers/book.controller');
 
-
-
 const router = express.Router()
 
 router.get('/book', getAllBooks);
