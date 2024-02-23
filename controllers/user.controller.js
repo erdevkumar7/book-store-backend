@@ -8,13 +8,13 @@ const User = db.User;
 
 // User signUp
 exports.registration = async (req, res) => {
-  const { user_email, user_password } = req.body;
+  const { email, password } = req.body;
   // Check for email and passowrd
-  if (!(user_password && user_email)) {
+  if (!(password && email)) {
     res.status(401).json({ message: "Email and Password Must Required" });
   } else {
     // check for existing user
-    const findUser = await User.findOne({ user_email: user_email });
+    const findUser = await User.findOne({ email: email });
     if (findUser) {
       res.status(400).json("Email already Registered!");
     }
@@ -23,7 +23,7 @@ exports.registration = async (req, res) => {
     if (!findUser) {
       const userCreated = await User.create({
         ...req.body,
-        user_password: await hashPassword(user_password), //hashing password
+        password: await hashPassword(password), //hashing password
       });
       res.status(201).json(userCreated);
     }
@@ -32,21 +32,21 @@ exports.registration = async (req, res) => {
 
 // Login the user
 exports.loginUser = async (req, res) => {
-  const { user_email, user_password } = req.body;
+  const { email, password } = req.body;
   // Check for email and passowrd
-  if (!(user_password && user_email)) {
+  if (!(password && email)) {
     res.status(401).json({ message: "Email and Password Must Required" });
   } else {
     // Check for register User or not
-    const findUser = await User.findOne({ user_email: user_email });
+    const findUser = await User.findOne({ email: email });
     if (!findUser) {
       return res.status(404).json("User not exist with this Email!");
     }
 
     // Check For Password Validation
     const validPassword = await isValidPassword(
-      user_password,
-      findUser.user_password
+      password,
+      findUser.password
     );
 
     if (!validPassword) {
@@ -55,9 +55,9 @@ exports.loginUser = async (req, res) => {
 
     if (validPassword) {
       const token = await generateToken({
-        user_objectId: findUser._id,
-        user_email: findUser.user_email,
-        user_role: findUser.user_role
+        objectId: findUser._id,
+        email: findUser.email,
+        role: findUser.role
       });
 
       res.status(200).json({

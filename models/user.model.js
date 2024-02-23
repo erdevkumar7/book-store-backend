@@ -1,24 +1,24 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-  user_name: {
+  name: {
     type: String,
   },
-  user_email: {
+  email: {
     type: String,
     required: true,
     unique: true,
   },
-  user_password: {
+  password: {
     type: String,
     required: true,
   },
-  user_role: {
+  role: {
     type: String,
     enum: ["user", "admin"],
     default: "user",
   },
-  user_cart: [
+  cart: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Book", // Assuming 'Book' is the name of your Book model
