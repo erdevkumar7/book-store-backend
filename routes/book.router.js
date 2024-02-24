@@ -3,7 +3,10 @@ const { getAllBooks, createBook, updateBookDetail, deleteBook } = require('../co
 
 const router = express.Router()
 
-router.get('/book', getAllBooks);
+// User can get and serach Books
+router.post('/books', getAllBooks);
+
+// Admin can CRUD book
 router.post('/book', createBook);
 router.put('/book/:id', updateBookDetail);
 router.delete('/book/:id', deleteBook)
