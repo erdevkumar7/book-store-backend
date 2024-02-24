@@ -3,10 +3,10 @@ const { allUser, registration, loginUser } = require('../controllers/user.contro
 const { webProtection, checkUserRole } = require('../middleware/web.protection');
 const router =  express.Router();
 
-
+// Registration ond Login Router
 router.post("/user", registration);
 router.post("/login", loginUser)
-
+// Admin can get All User Details
 router.get("/user", webProtection, checkUserRole, allUser);
 
 

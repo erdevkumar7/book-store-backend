@@ -22,7 +22,11 @@ exports.getAllBooks = async (req, res) => {
     if (search) {
       const regex = new RegExp(search, "i");
       query.title = regex;
-    } else if (author || category) {
+    } else if (author) {
+      query.author = author;
+    } else if (category && author === 0) {
+      query.category = category;
+    } else if (author && category === 0){
       query.author = author;
       query.category = category;
     }
