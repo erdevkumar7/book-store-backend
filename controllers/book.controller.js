@@ -14,14 +14,22 @@ exports.createBook = async (req, res) => {
 // Get all books and book by title if title in req.body
 exports.getAllBooks = async (req, res) => {
   try {
-    const { title } = req.body;
-    if (title) {
-      const getBookByName = await Book.find({ title: title });
-      res.status(200).json(getBookByName);
-    } else {
-      const getAllBooksData = await Book.find({});
-      res.status(200).json(getAllBooksData);
+    const { search } = req.params;
+    const { author, category } = req.body;
+
+    let query = {};
+
+    if (search) {
+      const regex = new RegExp(search, "i");
+      query.title = regex;
+    } else if (author || category) {
+      query.author = author;
+      query.category = category;
     }
+
+    // Find books based on the query
+    const books = await Book.find(query);
+    res.status(200).json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

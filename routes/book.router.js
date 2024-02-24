@@ -4,7 +4,7 @@ const { getAllBooks, createBook, updateBookDetail, deleteBook } = require('../co
 const router = express.Router()
 
 // User can get and serach Books
-router.post('/books', getAllBooks);
+router.post('/books/:search?', getAllBooks);
 
 // Admin can CRUD book
 router.post('/book', createBook);
