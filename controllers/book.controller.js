@@ -26,7 +26,7 @@ exports.getAllBooks = async (req, res) => {
       query.author = author;
     } else if (category && author === 0) {
       query.category = category;
-    } else if (author && category === 0){
+    } else if (author && category === 0) {
       query.author = author;
       query.category = category;
     }
@@ -34,6 +34,22 @@ exports.getAllBooks = async (req, res) => {
     // Find books based on the query
     const books = await Book.find(query);
     res.status(200).json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// getBookById
+exports.getBookById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getBookByIdData = await Book.findOne({ _id: id });
+
+    if (!getBookByIdData) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.status(200).json(getBookByIdData);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
